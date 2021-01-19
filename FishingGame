@@ -1,0 +1,177 @@
+
+boolean fishGoRight = true; // true = fish move to the right , false = fish move left//
+
+Fish[][] fish= new Fish[5][5]; // array for the fish
+int[] startRow= new int [5]; // creating two interger arrays, startRow and endRow
+int[] endRow= new int [5];
+
+
+//Variables needed for the game//
+PImage background;
+int Yboat=50;
+int canvasWidth=400; 
+int canvasHeight=600;
+int boatYpos = 80;
+int boatXpos = 150;
+int boatWidth=80;
+int boatHeight=80;
+int fishSize = 50;
+int gameMode = 1; //status of game
+int MaxCanvasWidth = canvasWidth- boatWidth; // max width the boat can go right
+
+
+Boat boat; //load boat
+Hook hook; // load hook
+
+void setup() //set up all functions and images needed for the fish game
+{
+  size(400,600);
+  background = loadImage("fishingBackground.png");
+  background.resize(width,height);
+  
+  boat = new Boat (boatXpos,boatYpos); //adds new boat class
+  boat.RenderBoat();  //renders boat on to the canvas
+ 
+  hook = null; 
+ 
+  MakeFish();
+}
+
+void draw() //draw the funtions on the canvas for the game//
+{
+  if (gameMode == 1) //draws and starts game, if the game is 1
+  {
+    image(background,0,0);
+    boat.RenderBoat();
+    MoveFish(); //runs the move fish function
+    if(hook!= null)
+    {
+      hook.RenderHook(); //renders hook
+    }
+  }
+  
+  if (gameMode == 0) //when game = 0, it ends the whole game by changing the background colour to gray and text saying game over
+  {
+    background(128); 
+    fill(0,255,0); //when game ends, grey background covers whole game
+    text("Game Over",180,300); //text pops up 
+  }
+}
+  
+void MakeFish() //function that creates the 5x5 fish//
+{
+  int fishY =350; //int fishY is created
+  for(int i=0; i<5; i++) // for loop 
+  {
+    int fishX =0; //int fishX is created
+    startRow [i]=0;
+    endRow [i] =4;
+  
+  for (int k=0; k<5; k++) // for loop
+  {
+    fish [i][k] = new Fish (fishX,fishY);
+    fish [i][k] .RenderFish();
+    fishX+=50; //moves fish 50 spaces to the right to make a row of 5 fish
+  }
+    fishY+=50; //moves fish down to create 5x5 fish array
+  }    
+}
+
+void MoveFish() //function to move fish left and right within the canvas
+{
+  
+  for(int i=0; i<5; i++) // for loop
+  {
+    if (fish[endRow[i]][4].fishX == canvasWidth - fishSize) 
+    {
+      fishGoRight = false; //fish moves left
+     
+      for(int k =0; k<5; k++){ // for loop
+      
+        if(fish[i][k].fishY > Yboat + boatHeight)//if the fish Y are more than y co-ordinate and boat height, the code below will run
+        {
+            fish[i][k].Y(fish[i][k].fishY -10); //fish moves to the left -10 every time
+        }   
+        if(fish[i][k].fishY == 140)//if the fish have a Y of 140 the game will end. When the fish reach 140, it wil touch the boat and end the game.
+        {
+         gameMode = 0; //game mode is changed to 0 which means the game ends.
+        }
+      }
+    } 
+    
+    else if(fish[startRow[i]][0].fishX == 0) // else if statement
+    {
+        fishGoRight = true; // fish moves right
+        
+        for(int k = 0; k<5; k++)  // for loop
+        {
+        if(fish[0][0].fishY > Yboat + boatHeight) //if the fish Y are more than y co-ordinate and boat height, the code below will run
+        {
+          fish[i][k].Y(fish[i][k].fishY -10); //fish moves to the left -10 every time
+       }
+        if(fish[i][k].fishY == 140) //if the fish have a Y of 140 the game will end. When the fish reach 140, it wil touch the boat and end the game.
+        {
+          gameMode = 0; //game mode is changed to 0 which means the game ends.
+        }
+      }
+    }    
+}
+     
+   if(fishGoRight) //if statement for the fish moving right
+   {
+     for(int i=0; i<5; i++)// for loop
+     {
+       for(int k=0;k<5; k++)// for loop
+       {
+         fish[i][k].X(fish[i][k].fishX +3); //adds 3 to the x axis so the fish moves to the right
+       }
+     }
+   }
+    
+      if(!fishGoRight)//if statement for the fish moving left
+      {
+     for(int i=0; i<5; i++) // for loop
+     {
+       for(int k=0;k<5; k++)// for loop
+       {
+         fish[i][k].X(fish[i][k].fishX -3);//reduces 3 to the x axis so the fish moves to the right
+       }
+     }
+   }
+   
+   for(int i=0; i<5; i++)// for loop
+   {
+     for(int k=0; k<5;k++)// for loop
+     {
+       fish[i][k].RenderFish();
+     }
+   }
+ 
+}
+
+void keyPressed() //functions 
+{
+
+  if (keyCode == RIGHT) //if the right button is clicked the code below will run
+    {
+      boat.rightMoveBoat(); //runs the rightmoveboat function which moves the boat to the right
+      boatXpos=  boatXpos+10;
+
+
+    }
+  if (keyCode == LEFT)//if the left button is clicked the code below will run
+   {
+     boat.leftMoveBoat();//runs the leftmoveboat function which moves the boat to the left
+     boatXpos = boatXpos-10;
+    
+   } 
+   
+   if (key == ' ') //if the spacebar is pressed , the function below will run
+   {
+      hook = new Hook (boatXpos+2, boatYpos +30); //a new hook  drop down
+   }
+}
+
+
+    
+   
