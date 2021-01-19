@@ -1,0 +1,32 @@
+class Hook //hook class//
+{
+  PImage hook; //hook image//
+  int  hookX, hookY; //int for the X and Y for the hook
+ 
+  public Hook (int x, int y)
+  {
+    this.hookX = x;
+    this.hookY  = y;    
+    
+    hook=loadImage("hook.png");  //load image
+    hook.resize(30,30); //change size
+  } //<>//
+
+  public void rightMoveHook() //this function is used to move the boat right when the right arrow is presses
+  {  
+      hookX =hookX+10;    // when the right arrow is clicked the x value of the boat will increase by 10 , moving it right
+  }
+     
+public void leftMoveHook()//this function is used to move the boat left when the right arrow is presses
+{
+    hookX =hookX-10;   // when the right arrow is clicked the x value of the boat will decrease by 10 , moving it left
+}
+
+ public void RenderHook() //render method which 
+ {
+   {
+     image(hook,hookX+20, hookY+40); // these co-ordinates will make sure the hook will be at the bottom of the boat
+     hookY = hookY+1; // hook will constantly go down
+   }
+ } 
+}
