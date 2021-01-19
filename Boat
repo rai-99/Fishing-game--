@@ -1,0 +1,39 @@
+ class Boat //boat class// //<>//
+ {
+  PImage boat;
+  int  _posX, _posY;
+  
+  public Boat(int posX, int posY)
+  {
+    this._posX = posX;
+    this._posY = posY;
+    
+    boat = loadImage("boat.png"); //load boat image//
+    boat.resize(boatWidth, boatHeight);    
+  }
+  
+public void rightMoveBoat() //this function is used to move the boat right when the right arrow is presses
+{
+  if(_posX <= MaxCanvasWidth) //if loop used to make sure the boat does not disappear from the canvas
+  {
+    _posX =_posX+10;    // when the right arrow is clicked the x value of the boat will increase by 10 , moving it right
+  }
+}
+     
+public void leftMoveBoat()//this function is used to move the boat left when the right arrow is presses
+{
+  if(_posX > 0)//if loop used to make sure the boat does not disappear from the canvas
+  {
+    _posX =_posX-10;   // when the right arrow is clicked the x value of the boat will decrease by 10 , moving it left
+  } 
+} 
+  
+public void RenderBoat()
+  {
+    image(boat, _posX, _posY); //renders boat
+    
+  }
+  
+}
+ 
+ 
