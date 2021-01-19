@@ -1,0 +1,29 @@
+class Fish //fish class//
+{
+  PImage fish; //fish image
+  int fishX,fishY; //int for the x and y for the fish
+   
+  public Fish(int x, int y)
+  {
+    fish=loadImage("Fish.png");
+    fishX = x;
+    fishY = y;
+  }
+  
+  void X(int x) //void X is needed for the fish array
+  {
+    fishX = x;
+  }
+  
+  void Y(int y)//void Y is needed for the fish array
+  {
+    fishY = y;
+  }
+    
+  
+ void RenderFish() //render fish method
+  {
+   image (fish, fishX,fishY);
+   fish.resize(fishSize,fishSize);
+  }
+}    
